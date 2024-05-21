@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+        Страница раздела {{ section }}
+{% endblock %}
+
+{% block body %}
+        <h1>
+            Страница раздела {{ section }}
+        </h1>
+        <div></div>
+            Количество элементов массива: {{ some_text | length }}
+        {% for text in some_text %}
+            <p>{{ text }}</p>
+        {% endfor %}
+{% endblock %}
