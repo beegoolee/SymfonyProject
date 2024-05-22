@@ -1,0 +1,11 @@
+@import "bootstrap";
+
+.page-body {
+    background-color: lightgray;
+    padding: 40px 0;
+    min-height: calc(100vh - 300px);
+}
+
+header, footer{
+    background-color: #fff;
+}
