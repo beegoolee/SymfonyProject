@@ -4,4 +4,12 @@
     <h1>
         Главная страница сайта
     </h1>
+    <div>
+        <a href="{{ path('Catalog main') }}">Catalog link</a>
+    </div>
+
+
+    <div>
+        <a href="{{ path('Catalog section', {section_code:"chel"}) }}">Catalog section link</a>
+    </div>
 {% endblock %}
