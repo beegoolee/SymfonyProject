@@ -13,21 +13,37 @@
         {% endblock %}
     </head>
     <body>
-        <header class="header p-4">
+        <header class="header p-4 container">
             <div class="header__top-row row">
-                <div class="col-xl-6">
-                    <img class="header__logo" src="{{ asset("img/header-logo.png") }}">
+                <div class="col-xl-2  align-self-center">
+                    <a class="header-logo" href="{{ path('Mainpage') }}">VK</a>
                 </div>
-                <div class="col-xl-6 align-content-center text-end">
-                    Текст в шапке
+                <div class="col-xl-4  align-self-center">
+                    <input placeholder="Search..." data-search-field="1" class="search-header"/>
+                </div>
+                <div class="col-xl-4  align-self-center">
+                    <span>Player</span>
+                </div>
+                <div class="col-xl-2 text-end align-self-center">
+                    <span>User menu</span>
                 </div>
             </div>
         </header>
         <div class="page-body">
-            {% block body %}{% endblock %}
+            <div class="container">
+                <div class="row">
+                    <div class="left-menu col-xl-2">
+                        <a href="{{ path('Mainpage') }}">Мой профиль</a>
+                        <a href="{{ path('News list') }}">Новости</a>
+                        <a href="{{ path('Messenger') }}">Мессенджер</a>
+                        <a href="{{ path('Friends list') }}">Друзья</a>
+                        <a href="{{ path('Music section') }}">Музыка</a>
+                    </div>
+                    <div class="content-area col-xl-10">
+                        {% block body %}{% endblock %}
+                    </div>
+                </div>
+            </div>
         </div>
-        <footer class="footer p-4">
-            <div class="footer__phone">8-800-555-35-35</div>
-        </footer>
     </body>
 </html>

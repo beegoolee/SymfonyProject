@@ -1,11 +1,27 @@
 @import "bootstrap";
 
+body{
+    background-color: #212529;
+    color: white;
+}
 .page-body {
-    background-color: lightgray;
+    background-color: #363738;
     padding: 40px 0;
-    min-height: calc(100vh - 300px);
+    min-height: calc(100vh - 75px);
 }
 
-header, footer{
-    background-color: #fff;
+header{
+    height: 75px;
+}
+
+.header-logo{
+    text-decoration: none;
+    color:#fff;
+}
+
+.left-menu a{
+    text-decoration: none;
+    color:#fff;
+    margin-bottom: 10px;
+    display: block;
 }

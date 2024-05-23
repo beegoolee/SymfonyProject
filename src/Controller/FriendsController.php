@@ -5,10 +5,10 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
-class MainpageController extends AbstractController
+class FriendsController extends AbstractController
 {
-    #[Route('/', 'Mainpage')]
+    #[Route('/friends/', 'Friends list')]
     public function index(){
-        return $this->render('mainpage.html.twig');
+        return $this->render('friends/friends.html.twig');
     }
 }

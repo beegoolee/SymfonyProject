@@ -5,10 +5,10 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
-class MainpageController extends AbstractController
+class MsgController extends AbstractController
 {
-    #[Route('/', 'Mainpage')]
+    #[Route('/msg/', 'Messenger')]
     public function index(){
-        return $this->render('mainpage.html.twig');
+        return $this->render('msg/msg.html.twig');
     }
 }
