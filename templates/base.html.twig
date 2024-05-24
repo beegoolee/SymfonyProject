@@ -13,37 +13,30 @@
         {% endblock %}
     </head>
     <body>
-        <header class="header p-4 container">
-            <div class="header__top-row row">
-                <div class="col-xl-2  align-self-center">
-                    <a class="header-logo" href="{{ path('Mainpage') }}">VK</a>
+        <header class="container">
+            <div class="header-top-row row">
+                {% include '__components/header_top_row.html.twig' %}
+            </div>
+
+            <div class="header-main-row row">
+                <div>
+                    <img src="https://asevalar.ru.22.evalar.tech/local/templates/asevalar/img/icons/as-text-logo-white.svg">
                 </div>
-                <div class="col-xl-4  align-self-center">
-                    <input placeholder="Search..." data-search-field="1" class="search-header"/>
+                {% include '__components/header_search.html.twig' %}
+                {% include '__components/header_cart.html.twig' %}
+                {% include '__components/header_favs.html.twig' %}
+                {% include '__components/header_personal.html.twig' %}
+                <div>
+                    <img src="https://asevalar.ru.22.evalar.tech/local/templates/asevalar/img/icons/LOGO_30.svg">
                 </div>
-                <div class="col-xl-4  align-self-center">
-                    <span>Player</span>
-                </div>
-                <div class="col-xl-2 text-end align-self-center">
-                    <span>User menu</span>
-                </div>
+            </div>
+
+            <div class="header-menu row">
+                {% include '__components/header_catalog_menu.html.twig' %}
             </div>
         </header>
-        <div class="page-body">
-            <div class="container">
-                <div class="row">
-                    <div class="left-menu col-xl-2">
-                        <a href="{{ path('Mainpage') }}">Мой профиль</a>
-                        <a href="{{ path('News list') }}">Новости</a>
-                        <a href="{{ path('Messenger') }}">Мессенджер</a>
-                        <a href="{{ path('Friends list') }}">Друзья</a>
-                        <a href="{{ path('Music section') }}">Музыка</a>
-                    </div>
-                    <div class="content-area col-xl-10">
-                        {% block body %}{% endblock %}
-                    </div>
-                </div>
-            </div>
-        </div>
+
+        {% block body %}
+        {% endblock %}
     </body>
 </html>
