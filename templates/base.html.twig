@@ -14,29 +14,36 @@
     </head>
     <body>
         <header class="container">
-            <div class="header-top-row row">
+            <div class="header-top-row row d-flex justify-content-start align-items-center">
                 {% include '__components/header_top_row.html.twig' %}
             </div>
 
-            <div class="header-main-row row">
-                <div>
-                    <img src="https://asevalar.ru.22.evalar.tech/local/templates/asevalar/img/icons/as-text-logo-white.svg">
+            <div class="header-main-row row align-items-center">
+                <div class="green-bg-header"></div>
+                <div class="col-4">
+                    <img class="header-logo left-logo" src="{{ asset('img/as-text-logo-white.svg') }}">
                 </div>
-                {% include '__components/header_search.html.twig' %}
-                {% include '__components/header_cart.html.twig' %}
-                {% include '__components/header_favs.html.twig' %}
-                {% include '__components/header_personal.html.twig' %}
-                <div>
-                    <img src="https://asevalar.ru.22.evalar.tech/local/templates/asevalar/img/icons/LOGO_30.svg">
+                <div class="col-4">
+                    {% include '__components/header_search.html.twig' %}
+                </div>
+                <div class="col-2">
+                    {% include '__components/header_cart-fav-personal.html.twig' %}
+                </div>
+                <div class="col-2">
+                    <img class="header-logo right-logo" src="{{ asset('img/LOGO_30.svg') }}">
                 </div>
             </div>
 
-            <div class="header-menu row">
+            <div class="header-menu row d-flex justify-content-between">
                 {% include '__components/header_catalog_menu.html.twig' %}
             </div>
         </header>
 
         {% block body %}
         {% endblock %}
+
+    <footer>
+
+    </footer>
     </body>
 </html>

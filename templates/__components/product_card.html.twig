@@ -1,0 +1,22 @@
+<div class="product">
+    <div class="product__top-row d-flex justify-content-between">
+        <div class="product__fav-btn like"></div>
+        <div class="product__badge">-22%</div>
+    </div>
+
+    <div class="product__inner">
+        <div class="product__inner-img-wrap">
+            <img class="product__img" src="{{ asset("img/product.jpg") }}">
+        </div>
+        <div class="product__inner-name">
+            Черника форте
+        </div>
+        <div class="product__inner-rating-wrap">
+            {% include '__components/rating-stars.html.twig' with {"rating" : "4"} %}
+        </div>
+        <div class="product__price_and_2cart">
+            <div class="product__card-final-price">999 ₽</div>
+            <div class="product__add2cart-btn">2Cart</div>
+        </div>
+    </div>
+</div>
