@@ -1,3 +1,5 @@
-<div class="products-slider section">
-    {% include '__components/product_card.html.twig' with {"PRODUCT_ID" : "123"} %}
+<div class="products-slider section d-flex">
+    {% for i in 1..5 %}
+        {% include '__components/product_card.html.twig' with {"PRODUCT_ID" : i} %}
+    {% endfor %}
 </div>

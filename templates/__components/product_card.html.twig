@@ -9,7 +9,7 @@
             <img class="product__img" src="{{ asset("img/product.jpg") }}">
         </div>
         <div class="product__inner-name">
-            Черника форте
+            Черника форте {{ PRODUCT_ID }}
         </div>
         <div class="product__inner-rating-wrap">
             {% include '__components/rating-stars.html.twig' with {"rating" : "4"} %}

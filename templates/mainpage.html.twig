@@ -6,16 +6,21 @@
    {% include '__components/leaf_title.html.twig' with {'title':'Горячие скидки'} %}
    {% include '__components/products_slider.html.twig' with {'var':'val'} %}
 
+
+   {% include '__components/leaf_title.html.twig' with {'title':'Товар дня'} %}
+   {% include '__components/products_slider.html.twig' with {'var':'val'} %}
+
+
    {% include '__components/alphabet_filter.html.twig' %}
 
-   <div class="catalog_diclaimer">
+   <div class="catalog_disclaimer">
       Уважаемые покупатели!<br>
       В настоящее время оформление заказов «самовывоз» через сайт доступно только в аптеке по адресу: Ленинградский проспект, 77 к.2.<br>
       Осуществить бронирование товаров, для получения в других <a style="text-decoration: underline" href="/pharmacies/">аптеках сети Эвалар</a>, возможно по телефонам аптек.<br>
       Благодарим за Ваше понимание.
    </div>
 
-   <div class="catalog_diclaimer">
+   <div class="catalog_disclaimer">
       Внимание!<br> Цены на сайте отличаются от цен в розничных аптеках. Забронировать товары в аптеках Вы можете по ценам розничных аптек. <br>Уточняйте цену при бронировании товаров в аптеках.
    </div>
 {% endblock %}

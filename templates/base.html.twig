@@ -13,7 +13,7 @@
         {% endblock %}
     </head>
     <body>
-        <header class="container">
+        <header class="container header">
             <div class="header-top-row row d-flex justify-content-start align-items-center">
                 {% include '__components/header_top_row.html.twig' %}
             </div>
@@ -42,8 +42,28 @@
         {% block body %}
         {% endblock %}
 
-    <footer>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__logos-row d-flex justify-content-between align-items-center">
+                <div class="footer__as-logo col-6">
+                    <img src="{{ asset("img/footer-logo.svg") }}">
+                </div>
 
+                <div class="footer__paysys-logos col-6 d-flex justify-content-end">
+                    <div>Visa</div>
+                    <div>Mastercard</div>
+                    <div>МИР</div>
+                    <div>Яндекс.Деньги</div>
+                </div>
+            </div>
+            <div class="footer__disclaimer">
+                Продажа и доставка безрецептурных лекарственных препаратов для медицинского применения осуществляется Обществом с ограниченной ответственностью «Аптечная сеть «Эвалар» (ОГРН 1097746391687, ИНН 7704729709, адрес: 119021, Россия, г. Москва, Зубовский бульвар, д.13 стр.1) в соответствии с Правилами осуществления розничной торговли лекарственными препаратами для медицинского применения дистанционным способом (утв. постановлением Правительства Российской Федерации от 16 мая 2020 г. № 697) на основании Разрешения на осуществление розничной торговли лекарственными препаратами для медицинского применения дистанционным способом № ДТ-77-000016 от 01.06.2020, выданным Территориальным органом Росздравнадзора по г. Москве и Московской области. Доставка лекарственных препаратов для медицинского применения, отпускаемых по рецепту врача, не осуществляется.
+            </div>
+            <div class="footer__disclaimer">
+                © 2003–2024, ООО «АС «Эвалар», 119021, Россия, г. Москва, Зубовский бульвар, д.13 стр.1, ИНН: 7704729709, ОГРН: 1097746391687<br>
+                юр. лицо, которому принадлежит домен: ООО «АС «Эвалар» e-mail: <a href="as.msk@evalar.com">as.msk@evalar.com</a>
+            </div>
+        </div>
     </footer>
     </body>
 </html>
