@@ -1,6 +1,6 @@
-<div class="product">
+<a class="product" href="/">
     <div class="product__top-row d-flex justify-content-between">
-        <div class="product__fav-btn like"></div>
+        <div class="product__fav-btn active"></div>
         <div class="product__badge">-22%</div>
     </div>
 
@@ -14,9 +14,12 @@
         <div class="product__inner-rating-wrap">
             {% include '__components/rating-stars.html.twig' with {"rating" : "4"} %}
         </div>
-        <div class="product__price_and_2cart">
-            <div class="product__card-final-price">999 ₽</div>
-            <div class="product__add2cart-btn">2Cart</div>
+        <div class="product__price_and_2cart d-flex justify-content-between align-items-end">
+            <div class="product__prices-block">
+                <div class="product__card-old-price">1999 ₽</div>
+                <div class="product__card-final-price">999 ₽</div>
+            </div>
+            <div class="product__add2cart-btn"></div>
         </div>
     </div>
-</div>
+</a>
