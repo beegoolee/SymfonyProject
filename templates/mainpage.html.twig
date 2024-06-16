@@ -3,13 +3,15 @@
 {% block body %}
    {% include '__components/banners_slider.html.twig' %}
 
-   {% include '__components/leaf_title.html.twig' with {'title':'Горячие скидки'} %}
-   {% include '__components/products_slider.html.twig' with {'var':'val'} %}
+   {% if products_discounted|length > 0 %}
+      {% include '__components/leaf_title.html.twig' with {'title':'Горячие скидки'} %}
+      {% include '__components/products_slider.html.twig' with {'products': products_discounted} %}
+   {% endif %}
 
-
-   {% include '__components/leaf_title.html.twig' with {'title':'Товар дня'} %}
-   {% include '__components/products_slider.html.twig' with {'var':'val'} %}
-
+   {% if products_of_the_day|length > 0 %}
+      {% include '__components/leaf_title.html.twig' with {'title':'Товар дня'} %}
+      {% include '__components/products_slider.html.twig' with {'products': products_of_the_day} %}
+   {% endif %}
 
    {% include '__components/alphabet_filter.html.twig' %}
 
