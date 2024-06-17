@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ChatListController!{% endblock %}
+
+{% block body %}
+    {% for chat in chats %}
+        <p>
+            <a href="{{ path('app_chat', {'id': chat.id}) }}">{{ chat.name }} ({{ chat.members|length }})</a>
+            {% if app.user.id == chat.ownerid %}
+{#                TODO удаляем чат через аякс, а не колхоз#}
+                <button data-chat-id="{{ chat.id }}" onclick="window.location.href = '{{ path('app_chat_ajax', {'id': chat.id}) }}'">Удалить чат</button>
+            {% endif %}
+        </p>
+    {% else %}
+        <p>Сообщений пока нет</p>
+    {% endfor %}
+{% endblock %}

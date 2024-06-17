@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div>
+        <img src="{{ user.avatar }}" alt="avatar">
+    </div>
+    <div>
+        ID: {{ user.id }}
+    </div>
+    <div>
+        Имя: {{ user.firstname}}
+    </div>
+    <div>
+        Фамилия: {{ user.secondname }}
+    </div>
+    <div>
+        Email: {{ user.email }}
+    </div>
+{% endblock %}
