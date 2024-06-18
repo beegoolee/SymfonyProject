@@ -4,8 +4,13 @@
     Список чатов
 {% endblock %}
 
-{% block body %}
+{% block body %}л
     <div class="chatlist overflow-y-scroll">
+        <div class="chatlist__row">
+            <div>
+                <a href="{{ path('app_new_chat') }}"><b>+</b> Создать новый чат</a>
+            </div>
+        </div>
         {% for chat in chats %}
             <div class="chatlist__row">
                 <div class="col-1">
@@ -18,7 +23,7 @@
                     <a href="{{ path('app_chat', {'id': chat.id}) }}">{{ chat.name }}</a>
                 </div>
 
-                <div class="col-1">
+                <div class="col-1 text-center">
                     {% if app.user.id == chat.chatOwner.id %}
                         <span class="x-close-btn" data-chat-id="{{ chat.id }}" onclick="window.location.href = '{{ path('app_chat_remove', {'id': chat.id}) }}'">x</span>
                     {% endif %}
@@ -28,10 +33,5 @@
             <p>Чатов пока нет</p>
         {% endfor %}
 
-        <div class="chatlist__row">
-            <div>
-                <a href="{{ path('app_new_chat') }}"><b>+</b> Создать новый чат</a>
-            </div>
-        </div>
     </div>
 {% endblock %}
