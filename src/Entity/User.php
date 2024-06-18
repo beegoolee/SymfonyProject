@@ -45,9 +45,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private bool $isVerified = false;
 
-    #[ORM\ManyToOne(inversedBy: 'members')]
-    private ?Chat $Chat = null;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -167,18 +164,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
-
-        return $this;
-    }
-
-    public function getChat(): ?Chat
-    {
-        return $this->Chat;
-    }
-
-    public function setChat(?Chat $Chat): static
-    {
-        $this->Chat = $Chat;
 
         return $this;
     }

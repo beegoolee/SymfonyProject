@@ -28,7 +28,7 @@ class Chat
     #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'Chat')]
     private Collection $members;
 
-    #[ORM\OneToOne(cascade: ['persist'])]
+    #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $chat_owner = null;
 
@@ -101,7 +101,7 @@ class Chat
         return $this->chat_owner;
     }
 
-    public function setChatOwner(User $chat_owner): static
+    public function setChatOwner(?User $chat_owner): static
     {
         $this->chat_owner = $chat_owner;
 

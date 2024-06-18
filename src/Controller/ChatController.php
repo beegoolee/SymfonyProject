@@ -25,7 +25,11 @@ class ChatController extends AbstractController
     #[Route('/chatList/', name: 'app_chats_list')]
     public function chatList(ChatRepository $chatRepository): Response
     {
-        $chats = $chatRepository->findAll();
+        if(!$this->getUser()){
+            return $this->redirectToRoute('app_login');
+        }
+
+        $chats = $chatRepository->findBy([], ['id' => 'DESC']);
         return $this->render('chat/chat_list.html.twig', [
             'controller_name' => 'ChatController',
             'chats' => $chats,
@@ -44,6 +48,10 @@ class ChatController extends AbstractController
     #[Route('/chatList/{id}', name: 'app_chat')]
     public function chat(Chat $chat, Request $request, EntityManagerInterface $em, MessageRepository $messageRepository): Response
     {
+        if(!$this->getUser()){
+            return $this->redirectToRoute('app_login');
+        }
+
         $message = new Message();
         $form = $this->createForm(MessageFormType::class, $message);
         $form->handleRequest($request);
@@ -81,6 +89,10 @@ class ChatController extends AbstractController
     #[Route('/new_chat/', name: 'app_new_chat')]
     public function newChat(Request $request, EntityManagerInterface $em): Response
     {
+        if(!$this->getUser()){
+            return $this->redirectToRoute('app_login');
+        }
+
         $chat = new Chat();
         $form = $this->createForm(ChatAddFormType::class, $chat);
         $form->handleRequest($request);
