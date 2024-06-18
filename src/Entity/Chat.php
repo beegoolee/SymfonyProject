@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ChatRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -20,11 +22,20 @@ class Chat
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $chat_avatar = null;
 
-    #[ORM\Column(type: Types::ARRAY, nullable: true)]
-    private ?array $members = null;
+    /**
+     * @var Collection<int, User>
+     */
+    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'Chat')]
+    private Collection $members;
 
-    #[ORM\Column]
-    private ?int $owner_id = null;
+    #[ORM\OneToOne(cascade: ['persist'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $chat_owner = null;
+
+    public function __construct()
+    {
+        $this->members = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -55,36 +66,42 @@ class Chat
         return $this;
     }
 
-    public function getMembers(): ?array
+    /**
+     * @return Collection<int, User>
+     */
+    public function getMembers(): Collection
     {
         return $this->members;
     }
 
-    public function setMembers(?array $members): static
+    public function addMember(User $member): static
     {
-        $this->members = $members;
+        if (!$this->members->contains($member)) {
+            $this->members->add($member);
+            $member->setChat($this);
+        }
 
         return $this;
     }
 
-    public function getOwnerId(): ?int
+    public function removeMember(User $member): static
     {
-        return $this->owner_id;
-    }
-
-    public function setOwnerId(int $owner_id): static
-    {
-        $this->owner_id = $owner_id;
+        if ($this->members->removeElement($member)) {
+            // set the owning side to null (unless already changed)
+            if ($member->getChat() === $this) {
+                $member->setChat(null);
+            }
+        }
 
         return $this;
     }
 
-    public function getChatOwner(): ?int
+    public function getChatOwner(): ?User
     {
         return $this->chat_owner;
     }
 
-    public function setChatOwner(int $chat_owner): static
+    public function setChatOwner(User $chat_owner): static
     {
         $this->chat_owner = $chat_owner;
 

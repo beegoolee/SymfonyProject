@@ -1,28 +1,8 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    Главная страница
+{% endblock %}
+
 {% block body %}
-
-    {% if is_granted("IS_AUTHENTICATED_FULLY") %}
-        <p>
-            Вы вошли под юзером <b>{{user.email ~ ", id:" ~user.id}} </b>
-        </p>
-        <p>
-            <a href="{{ path('app_profile', {'id':user.id}) }}">Профиль</a>
-        </p>
-        <p>
-            <a href="{{ path('app_new_chat') }}">Создать чат</a>
-        </p>
-        <p>
-            <a href="{{ path('app_chats_list') }}">Список чатов</a>
-        </p>
-        <p>
-            <a href="{{ path('app_logout') }}">Выйти</a>
-        </p>
-
-    {% else %}
-        <div class="disclaimer">
-           Неавторизованное быдло, иди умойся: <a href="{{ path('app_login') }}">Авторизоваться</a> или <a href="{{ path('app_register') }}">Зарегистрироваться</a>
-        </div>
-    {% endif %}
-
 {% endblock %}

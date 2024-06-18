@@ -1,29 +1,51 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-            <link rel="stylesheet" href="{{ encore_entry_link_tags('app') }}">
-        {% endblock %}
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-    </head>
-    <body>
-        <header class="container header">
-{#            <div>Шапка</div>#}
-        </header>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="icon"
+          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+        <link rel="stylesheet" href="{{ encore_entry_link_tags('app') }}">
+    {% endblock %}
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</head>
+<body>
+<header class="header">
+    <div class="container">
+        <a class="header_logo d-flex align-items-center" href="{{ path('app_mainpage') }}">
+            KOSTYA MOLODEC
+        </a>
+    </div>
+</header>
+<div class="body-content container d-flex">
+    <div class="col-2 d-flex flex-column leftcol">
+        {% if is_granted("IS_AUTHENTICATED_FULLY") %}
+            <a href="{{ path('app_profile', {'id':app.user.id}) }}">Профиль</a>
+            <a href="{{ path('app_new_chat') }}">Создать чат</a>
+            <a href="{{ path('app_chats_list') }}">Список чатов</a>
+            <a href="{{ path('app_logout') }}">Выйти</a>
+        {% else %}
+            <a href="{{ path('app_login') }}">Авторизоваться</a>
+            <a href="{{ path('app_register') }}">Зарегистрироваться</a>
+        {% endif %}
+    </div>
+    <div class="col-10 rightcol">
+        <h1>{{ block('title') }}</h1>
 
-        <div class="container main-content">
-            {% block body %}
-            {% endblock %}
-        </div>
-
-    <footer class="container footer">
-{#        <div>Подвал</div>#}
-    </footer>
-    </body>
+        {% block body %}
+        {% endblock %}
+    </div>
+</div>
+<footer class="footer">
+    <div class="container">
+        <a class="footer_logo d-flex align-items-center" href="{{ path('app_mainpage') }}">
+            KOSTYA MOLODEC
+        </a>
+    </div>
+</footer>
+</body>
 </html>

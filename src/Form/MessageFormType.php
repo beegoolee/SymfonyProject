@@ -12,11 +12,14 @@ class MessageFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('chat_id')
-            ->add('user_id')
-            ->add('text')
-            ->add('send_time')
-        ;
+            ->add('text', null, [
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'Введите сообщение...',
+                    'autofocus' => true,
+                    'class' => 'form-control',
+                ]
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

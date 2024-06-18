@@ -1,5 +1,115 @@
 @import "bootstrap"
 
-.main-content
-  margin-top: 40px
-  margin-bottom: 40px
+$blue: #1685ff
+$blue50: #1685ff7a
+$font_grey: #333
+$font_white: #fff
+
+.header,
+.footer
+  height: 100px
+  background-color: $blue
+
+  &_logo
+    height: 80px
+    width: auto
+    font-size: 32px
+    color: $font_white
+
+a
+  color: $font_grey
+  text-decoration: none
+.btm
+  background-color: $blue
+  &:hover
+    background-color: $blue50
+
+form
+  width: fit-content
+  text-align: center
+  min-width: 350px
+
+  input
+    margin-bottom: 20px
+    width: 100%
+
+  button
+    outline: 1px solid $blue
+    width: 100%
+
+.profile_lk
+  &__avatar
+    height: 100px
+    max-width: 100%
+
+.body-content
+  margin-top: 20px
+  margin-bottom: 20px
+  min-height: calc(100vh - 200px)
+
+  .leftcol
+    border-right: 1px solid $blue
+    padding-right: 20px
+
+    a
+      font-size: 18px
+      margin-bottom: 20px
+      display: block
+      position: relative
+      transition: 300ms all
+      width: fit-content
+
+      &:after
+        content: ""
+        width: 0
+        background-color: $blue50
+        height: 2px
+        display: block
+        position: absolute
+        transition: 300ms all
+
+      &:hover
+        opacity: 0.9
+
+        &:after
+          width: 100%
+
+  .rightcol
+    padding-left: 20px
+
+.chatlist
+  &__row
+    display: flex
+    align-items: center
+    padding: 5px
+    margin-bottom: -1px
+    border-bottom: 1px solid $blue
+    border-top: 1px solid $blue
+    &:hover
+      background-color: $blue50
+
+.chat-detail
+  outline: 1px solid $blue50
+  padding-left: 20px
+  padding-right: 20px
+  height: 550px
+  overflow-y: scroll
+  &__controls form
+    width: 100%
+    height: 50px
+    display: flex
+    justify-content: space-between
+    & > div
+      display: block
+      width: 90%
+      height: 100%
+      & > input
+        height: 100%
+    & > button
+      display: block
+      width: 10%
+      height: 100%
+
+.chat-avatar
+  height: 75px
+  width: 75px

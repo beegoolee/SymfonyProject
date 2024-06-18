@@ -1,8 +1,14 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    Создать новый чат
+{% endblock %}
+
 {% block body %}
     {{ form_errors(form) }}
     {{ form_start(form) }}
-    <button type="submit" class="btn">Создать новый чат</button>
+    {{ form_row(form.Name) }}
+    {{ form_row(form.chat_avatar) }}
+    <button type="submit" class="btn btn-lg btn-primary">Создать новый чат</button>
     {{ form_end(form) }}
 {% endblock %}

@@ -1,25 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ChatListController!{% endblock %}
+{% block title %}
+    Чат {{ chat.name }}
+{% endblock %}
 
 {% block body %}
-    {% for message in messages %}
-        <div>
-            <p>
-                <b>{{ message.userid }}</b>
-                <b>{{ message.sendtime }}</b>
-            </p>
-            <p>
-                {{ message.text }}
-            </p>
-        </div>
-    {% else %}
-        <p>Сообщений пока нет</p>
-    {% endfor %}
 
-
-    {{ form_errors(form) }}
-    {{ form_start(form) }}
-    <button type="submit" class="btn">Отправить высер</button>
-    {{ form_end(form) }}
+    <div class="chat-detail">
+        {% for message in messages %}
+            <div>
+                <p class="text-break">
+                    <b>{{ message.getUserChatName()}}</b>
+                    <b>| {{ message.getSendFormattedTime() }}</b>
+                </p>
+                <p class="text-break">
+                    {{ message.text }}
+                </p>
+            </div>
+        {% else %}
+            <p>Сообщений пока нет</p>
+        {% endfor %}
+    </div>
+    <div class="chat-detail__controls d-flex">
+        {{ form_errors(form) }}
+        {{ form_start(form) }}
+        {{ form_row(form.text) }}
+        <button type="submit" class="btn">Отправить</button>
+        {{ form_end(form) }}
+    </div>
 {% endblock %}

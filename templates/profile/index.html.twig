@@ -1,19 +1,34 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div>
-        <img src="{{ user.avatar }}" alt="avatar">
+    <div class="d-flex profile_lk">
+        <div class="col-2">
+            <img class="profile_lk__avatar" src="{{ asset(user.avatar??'img/nophoto.jpg') }}" alt="avatar">
+        </div>
+        <div class="col-10">
+            <p>
+                Имя: {{ user.firstname }}
+            </p>
+            <p>
+                Фамилия: {{ user.secondname }}
+            </p>
+            <p>
+                Логин: {{ user.email }}
+            </p>
+        </div>
     </div>
-    <div>
-        ID: {{ user.id }}
-    </div>
-    <div>
-        Имя: {{ user.firstname}}
-    </div>
-    <div>
-        Фамилия: {{ user.secondname }}
-    </div>
-    <div>
-        Email: {{ user.email }}
-    </div>
+
+    <hr>
+    {% if is_granted("IS_AUTHENTICATED_FULLY")%}
+        {% if app.user.id == user.id %}
+            {{ form_errors(form) }}
+            {{ form_start(form) }}
+
+            {{ form_row(form.first_name, {'attr':{'placeholder':"Имя"}}) }}
+            {{ form_row(form.second_name, {'attr':{'placeholder':"Фамилия"}}) }}
+            {{ form_row(form.avatar, {'attr':{'placeholder':"Путь до аватарки"}}) }}
+            <button type="submit" class="btn btn-lg btn-primary">Изменить данные</button>
+            {{ form_end(form) }}
+        {% endif %}
+    {% endif %}
 {% endblock %}

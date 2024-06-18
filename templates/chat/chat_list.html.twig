@@ -1,17 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ChatListController!{% endblock %}
+{% block title %}
+    Список чатов
+{% endblock %}
 
 {% block body %}
-    {% for chat in chats %}
-        <p>
-            <a href="{{ path('app_chat', {'id': chat.id}) }}">{{ chat.name }} ({{ chat.members|length }})</a>
-            {% if app.user.id == chat.ownerid %}
-{#                TODO удаляем чат через аякс, а не колхоз#}
-                <button data-chat-id="{{ chat.id }}" onclick="window.location.href = '{{ path('app_chat_ajax', {'id': chat.id}) }}'">Удалить чат</button>
-            {% endif %}
-        </p>
-    {% else %}
-        <p>Сообщений пока нет</p>
-    {% endfor %}
+    <div class="chatlist">
+        {% for chat in chats %}
+            <a class="chatlist__row" href="{{ path('app_chat', {'id': chat.id}) }}">
+                <div class="col-1">
+                    <img class="chat-avatar" src="{{ asset(chat.chatAvatar??"img/nophoto.jpg") }}">
+                </div>
+
+                <div class="col-10">
+                    <span>{{ chat.name }} ({{ chat.members|length }})</span>
+                </div>
+
+                <div class="col-1">
+                    {% if app.user.id == chat.chatOwner.id %}
+                        <button data-chat-id="{{ chat.id }}" onclick="window.location.href = '{{ path('app_chat_ajax', {'id': chat.id}) }}'">Удалить</button>
+                    {% endif %}
+                </div>
+            </a>
+        {% else %}
+            <p>Чатов пока нет</p>
+        {% endfor %}
+    </div>
 {% endblock %}

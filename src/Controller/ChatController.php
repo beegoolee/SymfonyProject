@@ -16,6 +16,12 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class ChatController extends AbstractController
 {
+    /**
+     * @param ChatRepository $chatRepository
+     * @return Response
+     *
+     * Контроллер списка чатов
+     */
     #[Route('/chatList/', name: 'app_chats_list')]
     public function chatList(ChatRepository $chatRepository): Response
     {
@@ -25,6 +31,16 @@ class ChatController extends AbstractController
             'chats' => $chats,
         ]);
     }
+
+    /**
+     * @param Chat $chat
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @param MessageRepository $messageRepository
+     * @return Response
+     *
+     * Контроллер конкретных чатов
+     */
     #[Route('/chatList/{id}', name: 'app_chat')]
     public function chat(Chat $chat, Request $request, EntityManagerInterface $em, MessageRepository $messageRepository): Response
     {
@@ -34,9 +50,11 @@ class ChatController extends AbstractController
 
         $iChatID = $chat->getId();
 
-        // TODO нужно в веб-форму подставить ИД чата и юзера, а также время отправки месседжа. По сути, спрашивать надо только текст сообщения
-
         if ($form->isSubmitted() && $form->isValid()) {
+            $message->setAuthor($this->getUser());
+            $message->setChatId($iChatID);
+            $message->setSendTime(time());
+
             $em->persist($message);
             $em->flush();
 
@@ -48,20 +66,28 @@ class ChatController extends AbstractController
         return $this->render('chat/chat.html.twig', [
             'controller_name' => 'ChatController',
             'messages' => $arMessages,
-            'form' => $form
+            'form' => $form,
+            'chat' => $chat
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @return Response
+     *
+     * Контроллер добавления нового чата
+     */
     #[Route('/new_chat/', name: 'app_new_chat')]
     public function newChat(Request $request, EntityManagerInterface $em): Response
     {
         $chat = new Chat();
         $form = $this->createForm(ChatAddFormType::class, $chat);
         $form->handleRequest($request);
-        $chat->setOwnerId($this->getUser()->getId());
 
-        // TODO нужно в веб-форму подставить владельца чата. По сути, спрашивать надо только имя чата и кого добавляем в него
         if ($form->isSubmitted() && $form->isValid()) {
+            $chat->setChatOwner($this->getUser());
+
             $em->persist($chat);
             $em->flush();
 
