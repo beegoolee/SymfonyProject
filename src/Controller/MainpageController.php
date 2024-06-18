@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class MainpageController extends AbstractController
 {
     #[Route('/', name: 'app_mainpage')]
-    public function index(): Response
+    public function mainpage(): Response
     {
         $user = $this->getUser();
         return $this->render('mainpage.html.twig', [

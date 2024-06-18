@@ -14,18 +14,24 @@
                     </a>
                 </div>
 
-                <div class="col-10">
+                <div class="col-10 chatlist__row-chatname">
                     <a href="{{ path('app_chat', {'id': chat.id}) }}">{{ chat.name }}</a>
                 </div>
 
                 <div class="col-1">
                     {% if app.user.id == chat.chatOwner.id %}
-                        <button data-chat-id="{{ chat.id }}" onclick="window.location.href = '{{ path('app_chat_ajax', {'id': chat.id}) }}'">Удалить</button>
+                        <span class="x-close-btn" data-chat-id="{{ chat.id }}" onclick="window.location.href = '{{ path('app_chat_remove', {'id': chat.id}) }}'">x</span>
                     {% endif %}
                 </div>
             </div>
         {% else %}
             <p>Чатов пока нет</p>
         {% endfor %}
+
+        <div class="chatlist__row">
+            <div>
+                <a href="{{ path('app_new_chat') }}"><b>+</b> Создать новый чат</a>
+            </div>
+        </div>
     </div>
 {% endblock %}

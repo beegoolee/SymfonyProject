@@ -15,20 +15,17 @@
             <p>
                 Логин: {{ user.email }}
             </p>
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                {% if app.user.id == user.id %}
+                    <a href="{{ path('app_profile_edit', {'id': user.id}) }}">
+                        Изменить данные
+                    </a>
+                {% endif %}
+            {% endif %}
         </div>
     </div>
 
     <hr>
-    {% if is_granted("IS_AUTHENTICATED_FULLY")%}
-        {% if app.user.id == user.id %}
-            {{ form_errors(form) }}
-            {{ form_start(form) }}
+    TODO: стена юзера, возможность писать в ЛС
 
-            {{ form_row(form.first_name, {'attr':{'placeholder':"Имя"}}) }}
-            {{ form_row(form.second_name, {'attr':{'placeholder':"Фамилия"}}) }}
-            {{ form_row(form.avatar, {'attr':{'placeholder':"Путь до аватарки"}}) }}
-            <button type="submit" class="btn btn-lg btn-primary">Изменить данные</button>
-            {{ form_end(form) }}
-        {% endif %}
-    {% endif %}
 {% endblock %}
