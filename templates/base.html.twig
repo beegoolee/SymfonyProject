@@ -24,7 +24,8 @@
 <div class="body-content container d-flex">
     <div class="col-2 d-flex flex-column leftcol">
         {% if is_granted("IS_AUTHENTICATED_FULLY") %}
-            <a href="{{ path('app_profile', {'id':app.user.id}) }}">Профиль</a>
+            <a href="{{ path('app_profile', {'id':app.user.id}) }}">Мой профиль</a>
+            <a href="{{ path('app_user_list') }}">Все пользователи</a>
             <a href="{{ path('app_new_chat') }}">Создать чат</a>
             <a href="{{ path('app_chats_list') }}">Список чатов</a>
             <a href="{{ path('app_logout') }}">Выйти</a>

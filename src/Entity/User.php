@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -44,6 +46,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private bool $isVerified = false;
+
+    public function getUserDisplayName()
+    {
+        return $this->getFirstName()?? $this->getEmail();
+    }
+
+    /**
+     * @var Collection<int, WallPost>
+     */
+    #[ORM\OneToMany(targetEntity: WallPost::class, mappedBy: 'RelatedWallOwner', orphanRemoval: true)]
+    private Collection $wallPosts;
+
+    public function __construct()
+    {
+        $this->wallPosts = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -164,6 +182,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, WallPost>
+     */
+    public function getWallPosts(): Collection
+    {
+        return $this->wallPosts;
+    }
+
+    public function addWallPost(WallPost $wallPost): static
+    {
+        if (!$this->wallPosts->contains($wallPost)) {
+            $this->wallPosts->add($wallPost);
+            $wallPost->setRelatedWallOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWallPost(WallPost $wallPost): static
+    {
+        if ($this->wallPosts->removeElement($wallPost)) {
+            // set the owning side to null (unless already changed)
+            if ($wallPost->getRelatedWallOwner() === $this) {
+                $wallPost->setRelatedWallOwner(null);
+            }
+        }
 
         return $this;
     }

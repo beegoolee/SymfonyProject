@@ -14,11 +14,12 @@
             </p>
             <p>
                 Логин: {{ user.email }}
+                <b>TODO: возможность писать в ЛС</b>
             </p>
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 {% if app.user.id == user.id %}
-                    <a href="{{ path('app_profile_edit', {'id': user.id}) }}">
-                        Изменить данные
+                    <a class="btn btn-lg btn-primary" href="{{ path('app_profile_edit', {'id': user.id}) }}">
+                        Изменить
                     </a>
                 {% endif %}
             {% endif %}
@@ -26,6 +27,30 @@
     </div>
 
     <hr>
-    TODO: стена юзера, возможность писать в ЛС
+    <div class="wall">
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <div class="wall__postform d-flex">
+                {{ form_errors(postAddForm) }}
+                {{ form_start(postAddForm) }}
+                {{ form_row(postAddForm.text) }}
+                <button type="submit" class="btn btn-lg btn-primary"> > </button>
+                {{ form_end(postAddForm) }}
+            </div>
+        {% endif %}
 
+        {% for userWallPost in userWallPosts | sort((a,b) => a.timestamp < b.timestamp) %}
+            <div class="wall__post d-flex {%if userWallPost.postAuthor == userWallPost.relatedWallOwner %}self-post{% endif%}">
+                {% include '__components/wallpost_message.html.twig' with
+                    {
+                        'author': userWallPost.postAuthor,
+                        'message_text': userWallPost.text,
+                        'message_timestamp': userWallPost.timestamp,
+                        'message_id': userWallPost.id
+                    }
+                %}
+            </div>
+        {% else %}
+            <i class="wall__no-posts">На стене пока нет записей</i>
+        {% endfor %}
+    </div>
 {% endblock %}

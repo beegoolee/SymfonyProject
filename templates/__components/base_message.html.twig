@@ -1,0 +1,14 @@
+<a href="{{ path('app_profile', {'id':author.id })}}">
+    <img class="chat-detail__msg-avatar" src="{{ asset('img/nophoto.jpg') }}">
+</a>
+<div class="text-break chat-detail__msg-content">
+    <p class="text-break chat-detail__msg-author-info">
+        <b>{{ author.getUserDisplayName()}}</b>
+        <b>| {{ timestampToString(message_timestamp) }}</b>
+    </p>
+    <p class="text-break chat-detail__msg-txt">
+        {{ message_text }}
+    </p>
+</div>
+{% block deleteBtn %}
+{% endblock %}

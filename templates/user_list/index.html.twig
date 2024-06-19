@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Список пользователей{% endblock %}
+
+{% block body %}
+    <div class="users-list d-flex flex-wrap justify-content-between">
+        {% for user in users %}
+            <div class="users-list__user col-auto">
+                <a class="users-list__user-link d-block h-100" href="{{ path('app_profile', {'id':user.id}) }}" style="background-image: url({{ asset(user.avatar??"img/nophoto.jpg") }})">
+                    <p class="users-list__user-name text-center">{{ user.getUserDisplayName() }}</p>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

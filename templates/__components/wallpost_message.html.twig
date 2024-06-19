@@ -1,0 +1,9 @@
+{% extends '__components/base_message.html.twig' %}
+
+{% block deleteBtn %}
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        {% if app.user == author or app.user.id == user.id %}
+            <span class="x-close-btn" onclick="window.location.href = '{{ path('app_wallpost_remove', {'wallOwnerID':user.id, 'id':message_id}) }}'">x</span>
+        {% endif %}
+    {% endif %}
+{% endblock %}

@@ -30,3 +30,6 @@ services:
 
     App\Entity\Message:
         autowire: true
+
+    App\Service\TimeFormatter:
+        autowire: true

@@ -67,22 +67,6 @@ class Message
         return $this;
     }
 
-    public function getUserChatName()
-    {
-        $authorUser = $this->author;
-        $this->user_chat_name = $authorUser->getFirstName()?? $authorUser->getEmail();
-
-        return $this->user_chat_name;
-    }
-
-    public function getSendFormattedTime(): ?string
-    {
-        // TODO местное время, а не Мск
-        date_default_timezone_set('Etc/GMT-3');
-        $this->send_formatted_time = date("d M, H:i", $this->send_time);
-        return $this->send_formatted_time;
-    }
-
     public function getAuthor(): ?User
     {
         return $this->author;
