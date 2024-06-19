@@ -17,14 +17,45 @@
                 <b>TODO: возможность писать в ЛС</b>
             </p>
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
+                {% if app.user.id != user.id %}
+                <a class="btn btn-lg btn-primary" href="{{ path('app_add_private_chat', {'user1': app.user.id, 'user2': user.id}) }}">
+                    Написать сообщение
+                </a>
+                {% endif %}
+
                 {% if app.user.id == user.id %}
                     <a class="btn btn-lg btn-primary" href="{{ path('app_profile_edit', {'id': user.id}) }}">
                         Изменить
+                    </a>
+                {% elseif user not in app.user.friends%}
+                    <a class="btn btn-lg btn-primary" href="{{ path('app_friend_action', {'action': 'add', 'myself': app.user.id, 'friend': user.id}) }}">
+                        Добавить в друзья
+                    </a>
+                {% else %}
+                    <a class="btn btn-lg btn-primary" href="{{ path('app_friend_action', {'action': 'remove', 'myself': app.user.id, 'friend': user.id}) }}">
+                        Убрать из друзей
                     </a>
                 {% endif %}
             {% endif %}
         </div>
     </div>
+
+    {% if(user.friends|length > 0) %}
+    <hr>
+    <div class="friends_list">
+        <h2>Друзья</h2>
+        <div class="users-list d-flex flex-wrap justify-content-start">
+            {% for friend in user.friends %}
+                <div class="users-list__user col-auto">
+                    <a class="users-list__user-link d-block h-100" href="{{ path('app_profile', {'id':friend.id}) }}" style="background-image: url({{ asset(friend.avatar??"img/nophoto.jpg") }})">
+                        <p class="users-list__user-name text-center">{{ friend.getUserDisplayName() }}</p>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
 
     <hr>
     <div class="wall">

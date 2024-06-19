@@ -22,19 +22,19 @@ class Chat
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $chat_avatar = null;
 
-    /**
-     * @var Collection<int, User>
-     */
-    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'Chat')]
-    private Collection $members;
-
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $chat_owner = null;
 
+    /**
+     * @var Collection<int, User>
+     */
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'chats')]
+    private Collection $Members;
+
     public function __construct()
     {
-        $this->members = new ArrayCollection();
+        $this->Members = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -66,36 +66,6 @@ class Chat
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getMembers(): Collection
-    {
-        return $this->members;
-    }
-
-    public function addMember(User $member): static
-    {
-        if (!$this->members->contains($member)) {
-            $this->members->add($member);
-            $member->setChat($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMember(User $member): static
-    {
-        if ($this->members->removeElement($member)) {
-            // set the owning side to null (unless already changed)
-            if ($member->getChat() === $this) {
-                $member->setChat(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getChatOwner(): ?User
     {
         return $this->chat_owner;
@@ -104,6 +74,30 @@ class Chat
     public function setChatOwner(?User $chat_owner): static
     {
         $this->chat_owner = $chat_owner;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getMembers(): Collection
+    {
+        return $this->Members;
+    }
+
+    public function addMember(User $member): static
+    {
+        if (!$this->Members->contains($member)) {
+            $this->Members->add($member);
+        }
+
+        return $this;
+    }
+
+    public function removeMember(User $member): static
+    {
+        $this->Members->removeElement($member);
 
         return $this;
     }

@@ -214,7 +214,7 @@ form
     padding: 10px 15px
     &-link
       background-repeat: no-repeat
-      background-size: contain
+      background-size: cover
       background-position: center
       position: relative
       outline: 1px solid $blue
@@ -232,3 +232,18 @@ form
       word-break: break-all
       background-color: rgba(0, 0, 0, .85)
       color: $font_white
+
+.friends_list
+  .users-list
+    &__user
+      width: 150px
+      height: 200px
+      &-link
+        outline: 0
+        .users-list__user-name
+          opacity: 0
+          transition: 300ms opacity
+        &:hover
+          .users-list__user-name
+            opacity: 1
+            background-color: rgba(0, 0, 0, .75)

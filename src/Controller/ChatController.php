@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Chat;
+use App\Entity\User;
 use App\Entity\Message;
 use App\Form\ChatAddFormType;
 use App\Form\MessageFormType;
@@ -25,11 +26,13 @@ class ChatController extends AbstractController
     #[Route('/chatList/', name: 'app_chats_list')]
     public function chatList(ChatRepository $chatRepository): Response
     {
-        if(!$this->getUser()){
+        $user = $this->getUser();
+        if(!$user){
             return $this->redirectToRoute('app_login');
         }
 
-        $chats = $chatRepository->findBy([], ['id' => 'DESC']);
+        $chats = $user->getChats();
+
         return $this->render('chat/chat_list.html.twig', [
             'controller_name' => 'ChatController',
             'chats' => $chats,

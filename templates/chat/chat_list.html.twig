@@ -11,7 +11,7 @@
                 <a href="{{ path('app_new_chat') }}"><b>+</b> Создать новый чат</a>
             </div>
         </div>
-        {% for chat in chats %}
+        {% for chat in chats | sort((a,b) => a.id < b.id) %}
             <div class="chatlist__row">
                 <div class="col-1">
                     <a href="{{ path('app_chat', {'id': chat.id}) }}">

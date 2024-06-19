@@ -1,5 +1,5 @@
 <a href="{{ path('app_profile', {'id':author.id })}}">
-    <img class="chat-detail__msg-avatar" src="{{ asset('img/nophoto.jpg') }}">
+    <img class="chat-detail__msg-avatar" src="{{ asset(author.avatar??'img/nophoto.jpg') }}">
 </a>
 <div class="text-break chat-detail__msg-content">
     <p class="text-break chat-detail__msg-author-info">

@@ -58,9 +58,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: WallPost::class, mappedBy: 'RelatedWallOwner', orphanRemoval: true)]
     private Collection $wallPosts;
 
+    /**
+     * @var Collection<int, self>
+     */
+    #[ORM\ManyToMany(targetEntity: self::class, inversedBy: 'Friends')]
+    private Collection $friends;
+
+    /**
+     * @var Collection<int, self>
+     */
+    #[ORM\ManyToMany(targetEntity: self::class, mappedBy: 'friends')]
+    private Collection $Friends;
+
+    /**
+     * @var Collection<int, Chat>
+     */
+    #[ORM\ManyToMany(targetEntity: Chat::class, mappedBy: 'Members')]
+    private Collection $chats;
+
     public function __construct()
     {
         $this->wallPosts = new ArrayCollection();
+        $this->friends = new ArrayCollection();
+        $this->Friends = new ArrayCollection();
+        $this->chats = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -211,6 +232,57 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             if ($wallPost->getRelatedWallOwner() === $this) {
                 $wallPost->setRelatedWallOwner(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getFriends(): Collection
+    {
+        return $this->friends;
+    }
+
+    public function addFriend(self $friend): static
+    {
+        if (!$this->friends->contains($friend)) {
+            $this->friends->add($friend);
+        }
+
+        return $this;
+    }
+
+    public function removeFriend(self $friend): static
+    {
+        $this->friends->removeElement($friend);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Chat>
+     */
+    public function getChats(): Collection
+    {
+        return $this->chats;
+    }
+
+    public function addChat(Chat $chat): static
+    {
+        if (!$this->chats->contains($chat)) {
+            $this->chats->add($chat);
+            $chat->addMember($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChat(Chat $chat): static
+    {
+        if ($this->chats->removeElement($chat)) {
+            $chat->removeMember($this);
         }
 
         return $this;
