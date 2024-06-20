@@ -32,9 +32,19 @@ class Chat
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'chats')]
     private Collection $Members;
 
+    /**
+     * @var Collection<int, Message>
+     */
+    #[ORM\OneToMany(targetEntity: Message::class, mappedBy: 'Chat', orphanRemoval: true)]
+    private Collection $messages;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $isPrivate = null;
+
     public function __construct()
     {
         $this->Members = new ArrayCollection();
+        $this->messages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -98,6 +108,48 @@ class Chat
     public function removeMember(User $member): static
     {
         $this->Members->removeElement($member);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Message>
+     */
+    public function getMessages(): Collection
+    {
+        return $this->messages;
+    }
+
+    public function addMessage(Message $message): static
+    {
+        if (!$this->messages->contains($message)) {
+            $this->messages->add($message);
+            $message->setChat($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessage(Message $message): static
+    {
+        if ($this->messages->removeElement($message)) {
+            // set the owning side to null (unless already changed)
+            if ($message->getChat() === $this) {
+                $message->setChat(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function isPrivate(): ?bool
+    {
+        return $this->isPrivate;
+    }
+
+    public function setPrivate(?bool $isPrivate): static
+    {
+        $this->isPrivate = $isPrivate;
 
         return $this;
     }

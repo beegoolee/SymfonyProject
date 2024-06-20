@@ -2,7 +2,7 @@
 {% block deleteBtn %}
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         {% if app.user.id == chat.chatOwner.id or app.user.id == message.author.id %}
-            <span class="x-close-btn" onclick="window.location.href = '{{ path('app_chat_msg_remove', {'id': message.id, 'chatId': message.chatId}) }}'">x</span>
+            <span class="x-close-btn" onclick="window.location.href = '{{ path('app_chat_msg_remove', {'id': message.id, 'chatId': message.chat.id}) }}'">x</span>
         {% endif %}
     {% endif %}
 {% endblock %}

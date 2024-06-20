@@ -6,13 +6,13 @@
 
 {% block body %}
     <div class="chat-detail overflow-y-scroll">
-        {% for message in messages %}
+        {% for message in chat.messages %}
             <div class="chat-detail__msg d-flex">
                 {% include '__components/chat_message.html.twig' with
                     {
                         'author': message.author,
                         'message_text': message.text,
-                        'message_timestamp': message.sendTime,
+                        'message_timestamp': 123,
                         'chat': chat
                     }
                 %}

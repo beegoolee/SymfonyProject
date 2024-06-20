@@ -59,24 +59,18 @@ class ChatController extends AbstractController
         $form = $this->createForm(MessageFormType::class, $message);
         $form->handleRequest($request);
 
-        $iChatID = $chat->getId();
-
         if ($form->isSubmitted() && $form->isValid()) {
             $message->setAuthor($this->getUser());
-            $message->setChatId($iChatID);
-            $message->setSendTime(time());
+            $message->setChat($chat);
 
             $em->persist($message);
             $em->flush();
 
-            return $this->redirectToRoute('app_chat', ['id' => $iChatID]);
+            return $this->redirectToRoute('app_chat', ['id' => $chat->getId()]);
         }
-
-        $arMessages = $messageRepository->findMessagesByChatID($iChatID);
 
         return $this->render('chat/chat.html.twig', [
             'controller_name' => 'ChatController',
-            'messages' => $arMessages,
             'form' => $form,
             'chat' => $chat
         ]);
@@ -101,9 +95,16 @@ class ChatController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $chat->setChatOwner($this->getUser());
+            $user = $this->getUser();
 
+            $chat->setChatOwner($user);
+            $chat->addMember($user);
+            $chat->setPrivate(false);
             $em->persist($chat);
+
+            $user->addChat($chat);
+            $em->persist($user);
+
             $em->flush();
 
             return $this->redirectToRoute('app_chat', ['id' => $chat->getId()]);

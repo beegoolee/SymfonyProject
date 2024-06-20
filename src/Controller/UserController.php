@@ -37,7 +37,6 @@ class UserController extends AbstractController
         $postAddForm->handleRequest($request);
 
         if ($postAddForm->isSubmitted() && $postAddForm->isValid()) {
-            $addedPost->setTimestamp(time());
             $addedPost->setPostAuthor($this->getUser());
             $addedPost->setRelatedWallOwner($user);
 

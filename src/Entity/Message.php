@@ -14,33 +14,20 @@ class Message
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $chat_id = null;
-
     #[ORM\Column(length: 1024)]
     private ?string $text = null;
-
-    #[ORM\Column]
-    private ?int $send_time = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $author = null;
 
+    #[ORM\ManyToOne(inversedBy: 'messages')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Chat $Chat = null;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getChatId(): ?int
-    {
-        return $this->chat_id;
-    }
-    public function setChatId(int $chat_id): static
-    {
-        $this->chat_id = $chat_id;
-
-        return $this;
     }
 
     public function getText(): ?string
@@ -55,18 +42,6 @@ class Message
         return $this;
     }
 
-    public function getSendTime(): ?int
-    {
-        return $this->send_time;
-    }
-
-    public function setSendTime(int $send_time): static
-    {
-        $this->send_time = $send_time;
-
-        return $this;
-    }
-
     public function getAuthor(): ?User
     {
         return $this->author;
@@ -75,6 +50,18 @@ class Message
     public function setAuthor(?User $author): static
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    public function getChat(): ?Chat
+    {
+        return $this->Chat;
+    }
+
+    public function setChat(?Chat $Chat): static
+    {
+        $this->Chat = $Chat;
 
         return $this;
     }

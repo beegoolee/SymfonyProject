@@ -24,9 +24,6 @@ class WallPost
     #[ORM\Column(length: 1024, nullable: true)]
     private ?string $text = null;
 
-    #[ORM\Column(length: 64)]
-    private ?string $timestamp = null;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -64,18 +61,6 @@ class WallPost
     public function setText(?string $text): static
     {
         $this->text = $text;
-
-        return $this;
-    }
-
-    public function getTimestamp(): ?string
-    {
-        return $this->timestamp;
-    }
-
-    public function setTimestamp(string $timestamp): static
-    {
-        $this->timestamp = $timestamp;
 
         return $this;
     }

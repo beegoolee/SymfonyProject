@@ -15,18 +15,4 @@ class MessageRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Message::class);
     }
-
-    /**
-     * @return Message[] Returns an array of Message objects
-     */
-    public function findMessagesByChatID($chatID): array
-    {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.chat_id = :val')
-            ->setParameter('val', $chatID)
-            ->orderBy('m.id', 'ASC')
-            ->getQuery()
-            ->getResult()
-        ;
-    }
 }
