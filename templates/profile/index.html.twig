@@ -3,7 +3,7 @@
 {% block body %}
     <div class="d-flex profile_lk">
         <div class="col-2">
-            <img class="profile_lk__avatar" src="{{ asset(user.avatar??'img/nophoto.jpg') }}" alt="avatar">
+            <img class="profile_lk__avatar" src="{{ asset(user.avatar) }}" alt="avatar">
         </div>
         <div class="col-10">
             <p>
@@ -14,7 +14,6 @@
             </p>
             <p>
                 Логин: {{ user.email }}
-                <b>TODO: возможность писать в ЛС</b>
             </p>
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
 
@@ -48,7 +47,7 @@
         <div class="users-list d-flex flex-wrap justify-content-start">
             {% for friend in user.friends %}
                 <div class="users-list__user col-auto">
-                    <a class="users-list__user-link d-block h-100" href="{{ path('app_profile', {'id':friend.id}) }}" style="background-image: url({{ asset(friend.avatar??"img/nophoto.jpg") }})">
+                    <a class="users-list__user-link d-block h-100" href="{{ path('app_profile', {'id':friend.id}) }}" style="background-image: url({{ asset(friend.avatar) }})">
                         <p class="users-list__user-name text-center">{{ friend.getUserDisplayName() }}</p>
                     </a>
                 </div>
@@ -75,7 +74,7 @@
                     {
                         'author': userWallPost.postAuthor,
                         'message_text': userWallPost.text,
-                        'message_timestamp': 123,
+                        'message_timestamp': userWallPost.createdAt,
                         'message_id': userWallPost.id
                     }
                 %}

@@ -7,10 +7,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[ORM\Entity(repositoryClass: ChatRepository::class)]
 class Chat
 {
+    use TimestampableEntity;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -36,6 +39,7 @@ class Chat
      * @var Collection<int, Message>
      */
     #[ORM\OneToMany(targetEntity: Message::class, mappedBy: 'Chat', orphanRemoval: true)]
+    #[ORM\OrderBy(['createdAt' => 'ASC'])]
     private Collection $messages;
 
     #[ORM\Column(nullable: true)]
@@ -66,7 +70,7 @@ class Chat
 
     public function getChatAvatar(): ?string
     {
-        return $this->chat_avatar;
+        return $this->chat_avatar?? "img/nophoto.jpg";
     }
 
     public function setChatAvatar(?string $chat_avatar): static
@@ -110,6 +114,19 @@ class Chat
         $this->Members->removeElement($member);
 
         return $this;
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getLastMessage()
+    {
+        if($messagesCount = $this->messages->count()){
+            $lastKey = $this->messages->count() - 1;
+            return $this->messages->get($lastKey);
+        }
+
+        return null;
     }
 
     /**

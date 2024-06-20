@@ -36,11 +36,14 @@ class AjaxChatController extends AbstractController
     {
         $chatRepo = $em->getRepository(Chat::class);
 
-        if (0&&$chat = $chatRepo->findPrivateChat($user1, $user2)) {
-            // чат уже есть - берем его TODO findPrivateChat
+        if ($chat = $chatRepo->findPrivateChat($user1, $user2)) {
         } else {
             $chat = new Chat();
 
+            $now = new \DateTime('now');
+
+            $chat->setCreatedAt($now);
+            $chat->setUpdatedAt($now);
             $chat->setPrivate(true);
             $chat->addMember($user1);
             $chat->addMember($user2);

@@ -11,21 +11,31 @@
                 <a href="{{ path('app_new_chat') }}"><b>+</b> Создать новый чат</a>
             </div>
         </div>
-        {% for chat in chats | sort((a,b) => a.id < b.id) %}
+        {% for chat in chats %}
             <div class="chatlist__row">
                 <div class="col-1">
                     <a href="{{ path('app_chat', {'id': chat.id}) }}">
-                        <img class="chat-avatar" src="{{ asset(chat.chatAvatar??"img/nophoto.jpg") }}">
+                        <img class="chat-avatar" src="{{ asset(chat.chatAvatar) }}">
                     </a>
                 </div>
 
-                <div class="col-10 chatlist__row-chatname">
-                    <a href="{{ path('app_chat', {'id': chat.id}) }}">{{ chat.name }}</a>
+                <div class="col-10 chatlist__row-chat-content d-flex flex-column align-self-baseline">
+                    <a class="chatlist__row-chatname" href="{{ path('app_chat', {'id': chat.id}) }}">{{ chat.name }}</a>
+                    {% if chat.getLastMessage %}
+                        <div class="chatlist__last-message">
+                            <img class="chatlist__last-message-author d-inline-block"
+                                 src="{{ asset(chat.getLastMessage.author.avatar) }}">
+                            <span class="chatlist__last-message-text">
+                                    {{ chat.getLastMessage.text }}
+                                </span>
+                        </div>
+                    {% endif %}
                 </div>
 
                 <div class="col-1 text-center">
                     {% if app.user.id == chat.chatOwner.id %}
-                        <span class="x-close-btn" data-chat-id="{{ chat.id }}" onclick="window.location.href = '{{ path('app_chat_remove', {'id': chat.id}) }}'">x</span>
+                        <span class="x-close-btn" data-chat-id="{{ chat.id }}"
+                              onclick="window.location.href = '{{ path('app_chat_remove', {'id': chat.id}) }}'">x</span>
                     {% endif %}
                 </div>
             </div>

@@ -4,10 +4,13 @@ namespace App\Entity;
 
 use App\Repository\WallPostRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[ORM\Entity(repositoryClass: WallPostRepository::class)]
 class WallPost
 {
+    use TimestampableEntity;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

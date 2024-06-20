@@ -5,10 +5,22 @@
 {% endblock %}
 
 {% block body %}
-    {{ form_errors(form) }}
-    {{ form_start(form) }}
-    {{ form_row(form.Name) }}
-    {{ form_row(form.chat_avatar) }}
-    <button type="submit" class="btn btn-lg btn-primary">Создать новый чат</button>
-    {{ form_end(form) }}
+    <h2>Твои друзья</h2>
+    TODO: добавление друзей в создаваемый чат
+    <div class="chat-members">
+        {% for friend in app.user.friends %}
+            <a class="chat-members__member w-auto h-auto" href="{{ path('app_profile', {'id':friend.id}) }}">
+                <nobr>{{ friend.getUserDisplayName }}, ID: {{ friend.id }}</nobr>
+            </a>
+        {% endfor %}
+    </div>
+    <hr>
+    <div>
+        {{ form_errors(form) }}
+        {{ form_start(form) }}
+        {{ form_row(form.Name) }}
+        {{ form_row(form.chat_avatar) }}
+        <button type="submit" class="btn btn-lg btn-primary">Создать новый чат</button>
+        {{ form_end(form) }}
+    </div>
 {% endblock %}

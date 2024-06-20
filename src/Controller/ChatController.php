@@ -63,7 +63,14 @@ class ChatController extends AbstractController
             $message->setAuthor($this->getUser());
             $message->setChat($chat);
 
+            $now = new \DateTime('now');
+            $message->setCreatedAt($now);
+            $message->setUpdatedAt($now);
             $em->persist($message);
+
+            $chat->setUpdatedAt($now);
+            $em->persist($chat);
+
             $em->flush();
 
             return $this->redirectToRoute('app_chat', ['id' => $chat->getId()]);
@@ -97,9 +104,14 @@ class ChatController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $this->getUser();
 
+            $now = new \DateTime('now');
+
+            $chat->setCreatedAt($now);
+            $chat->setUpdatedAt($now);
             $chat->setChatOwner($user);
             $chat->addMember($user);
             $chat->setPrivate(false);
+            
             $em->persist($chat);
 
             $user->addChat($chat);

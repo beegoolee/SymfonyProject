@@ -4,7 +4,7 @@
 <div class="text-break chat-detail__msg-content">
     <p class="text-break chat-detail__msg-author-info">
         <b>{{ author.getUserDisplayName()}}</b>
-        <b>| {{ timestampToString(message_timestamp) }}</b>
+        <b>| {{ message_timestamp|date('d.M H:i', 'Europe/Moscow') }}</b>
     </p>
     <p class="text-break chat-detail__msg-txt">
         {{ message_text }}

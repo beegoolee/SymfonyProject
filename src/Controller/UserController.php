@@ -8,6 +8,7 @@ use App\Form\ProfileEditType;
 use App\Form\WallPostAddFormType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,9 +17,13 @@ use Symfony\Component\Routing\Attribute\Route;
 class UserController extends AbstractController
 {
     #[Route('/users/', name: 'app_user_list')]
-    public function usersList(EntityManagerInterface $em): Response
+    public function usersList(EntityManagerInterface $em, PaginatorInterface $paginator, Request $request): Response
     {
-        $users = $em->getRepository(User::class)->findAll();
+        $users = $paginator->paginate(
+            $em->getRepository(User::class)->findAll(),
+            $request->query->getInt('page', 1),
+            10
+        );
 
         return $this->render('user_list/index.html.twig', [
             'controller_name' => 'UserListController',
@@ -39,6 +44,10 @@ class UserController extends AbstractController
         if ($postAddForm->isSubmitted() && $postAddForm->isValid()) {
             $addedPost->setPostAuthor($this->getUser());
             $addedPost->setRelatedWallOwner($user);
+
+            $now = new \DateTime('now');
+            $addedPost->setCreatedAt($now);
+            $addedPost->setUpdatedAt($now);
 
             $em->persist($addedPost);
             $em->flush();

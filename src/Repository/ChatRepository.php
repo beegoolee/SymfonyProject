@@ -32,16 +32,30 @@ class ChatRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-        public function findPrivateChat(User $user1, User $user2): ?Chat
+        public function findPrivateChat(User $user1, User $user2)
         {
-            return $this->createQueryBuilder('c')
-                ->andWhere(':user1 in c.Members')
-                ->andWhere(':user2 in c.Members')
-                ->andWhere('c.Members count = 2')
-                ->setParameter('user1', $user1)
-                ->setParameter('user2', $user1)
-                ->getQuery()
-                ->getOneOrNullResult()
-            ;
+            // TODO - переделать через QueryBuilder, фильтрация результатов должна происходить на этапе запроса в БД
+//
+//            $a= $this->createQueryBuilder('c')
+//                ->innerJoin('c.user', 'u')
+//                ->andWhere('c.isPrivate = true')
+//                ->andWhere('c.Members = :user1 AND c.Members = :user2')
+//                ->setParameter('user1', $user1)
+//                ->setParameter('user2', $user2)
+//                ->getQuery()
+//            ;
+//            dd($a,$a->getResult());
+
+            $arAllChats = $this->findAll();
+            foreach($arAllChats as $chat){
+                $members = $chat->getMembers();
+                $arMembers = $members->getValues();
+                if(count($arMembers) == 2){
+                    if(in_array($user1, $arMembers) && in_array($user2, $arMembers)){
+                        return $chat;
+                    }
+                }
+            }
+            return null;
         }
 }

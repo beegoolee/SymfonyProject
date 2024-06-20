@@ -74,6 +74,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var Collection<int, Chat>
      */
     #[ORM\ManyToMany(targetEntity: Chat::class, mappedBy: 'Members')]
+    #[ORM\OrderBy(['updatedAt' => 'DESC'])]
     private Collection $chats;
 
     public function __construct()
@@ -185,7 +186,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getAvatar(): ?string
     {
-        return $this->avatar;
+        return $this->avatar?? "img/nophoto.jpg";
     }
 
     public function setAvatar(?string $avatar): static

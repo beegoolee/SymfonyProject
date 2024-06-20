@@ -5,6 +5,14 @@
 {% endblock %}
 
 {% block body %}
+
+    <div class="chat-members d-flex justify-content-start">
+        {% for member in chat.members %}
+            <a class="chat-members__member" href="{{ path('app_profile', {'id':member.id}) }}">
+                <img src="{{ asset( member.avatar ) }}">
+            </a>
+        {% endfor %}
+    </div>
     <div class="chat-detail overflow-y-scroll">
         {% for message in chat.messages %}
             <div class="chat-detail__msg d-flex">
@@ -12,10 +20,9 @@
                     {
                         'author': message.author,
                         'message_text': message.text,
-                        'message_timestamp': 123,
+                        'message_timestamp': message.createdAt,
                         'chat': chat
-                    }
-                %}
+                    } %}
             </div>
         {% else %}
             <p>Сообщений пока нет</p>
@@ -25,7 +32,7 @@
         {{ form_errors(form) }}
         {{ form_start(form) }}
         {{ form_row(form.text) }}
-        <button type="submit" class="btn btn-lg btn-primary"> > </button>
+        <button type="submit" class="btn btn-lg btn-primary"> ></button>
         {{ form_end(form) }}
     </div>
 {% endblock %}
