@@ -56,6 +56,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var Collection<int, WallPost>
      */
     #[ORM\OneToMany(targetEntity: WallPost::class, mappedBy: 'RelatedWallOwner', orphanRemoval: true)]
+    #[ORM\OrderBy(['createdAt' => 'DESC'])]
     private Collection $wallPosts;
 
     /**

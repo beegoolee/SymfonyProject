@@ -68,8 +68,8 @@
             </div>
         {% endif %}
 
-        {% for userWallPost in userWallPosts | sort((a,b) => a.timestamp < b.timestamp) %}
-            <div class="wall__post d-flex {%if userWallPost.postAuthor == userWallPost.relatedWallOwner %}self-post{% endif%}">
+        {% for userWallPost in userWallPosts %}
+            <div class="wall__post d-flex {% if userWallPost.postAuthor == userWallPost.relatedWallOwner %}self-post{% endif%}">
                 {% include '__components/wallpost_message.html.twig' with
                     {
                         'author': userWallPost.postAuthor,
