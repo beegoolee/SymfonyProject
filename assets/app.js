@@ -7,3 +7,12 @@
 
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.sass';
+import Vue from 'vue';
+
+new Vue({
+    el: '#app',
+    data: {
+        message: "MESSAGE FROM VUE!"
+    },
+    delimiters: ['${', '}$']
+});
