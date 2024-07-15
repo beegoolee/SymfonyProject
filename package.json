@@ -7,7 +7,7 @@
         "regenerator-runtime": "^0.13.9",
         "sass": "^1.77.2",
         "sass-loader": "^14.0.0",
-        "vue": "^3.4.31",
+        "vue": "^2.7.16",
         "vue-loader": "^15.9.5",
         "vue-template-compiler": "^2.7.16",
         "webpack": "^5.74.0",
